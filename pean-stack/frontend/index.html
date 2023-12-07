@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milestone 2</title>
+  </head>
+  <body>
+    <h1><span id="user">Loading...</span> has reached milestone 2!</h1>
+    <h3 id="containerId"></h3>
+    <script>
+      // fetch user from API
+      try {
+        fetch("http://192.168.56.5:3000")
+          .then((res) => res.json())
+          .then((data) => {
+            // get user name
+            const { user, containerId } = data;
+            // display user name
+            document.getElementById("user").innerText = user;
+
+            // display container id
+            document.getElementById("containerId").innerText = containerId;
+          })
+          .catch((error) => {
+            document.getElementById("user").innerText = error;
+          });
+      } catch (error) {
+        document.getElementById("user").innerText = "Error";
+        console.log(error);
+      }
+    </script>
+  </body>
+</html>
