@@ -31,6 +31,14 @@ helm install prometheus prometheus-community/prometheus
 # Install Grafana
 helm install grafana grafana/grafana
 
+# Add the Argo CD Helm Repository
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+helm install argocd argo/argo-cd
+
+# add namespace
+kubectl create namespace milestone-2-op
+
 # Check installations
 kubectl version --client
 helm version
