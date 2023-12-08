@@ -1,7 +1,8 @@
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'pean-stack/backend/**'
+      - 'pean-stack/frontend/**'
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -16,13 +17,13 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Build and Push Backend Docker Image
-      if: any(github.event.head_commit.modified.* == 'pean-stack/backend/**')
+      if: contains(github.event.head_commit.modified, 'pean-stack/backend/') || contains(github.event.head_commit.added, 'pean-stack/backend/') || contains(github.event.head_commit.removed, 'pean-stack/backend/')
       run: |
         docker build -t podnes/backend-op ./pean-stack/backend
         docker push podnes/backend-op:latest
 
     - name: Build and Push Frontend Docker Image
-      if: any(github.event.head_commit.modified.* == 'pean-stack/frontend/**')
+      if: contains(github.event.head_commit.modified, 'pean-stack/frontend/') || contains(github.event.head_commit.added, 'pean-stack/frontend/') || contains(github.event.head_commit.removed, 'pean-stack/frontend/')
       run: |
         docker build -t podnes/frontend-op ./pean-stack/frontend
         docker push podnes/frontend-op:latest
