@@ -15,14 +15,24 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+     - name: Determine Changed Paths
+      id: changed-files
+      uses: dorny/paths-filter@v2
+      with:
+        filters: |
+          backend:
+            - 'pean-stack/backend/**'
+          frontend:
+            - 'pean-stack/frontend/**'
+
     - name: Build and Push Backend Docker Image
-      if: contains(github.event.head_commit.modified, 'pean-stack/backend/') || contains(github.event.head_commit.added, 'pean-stack/backend/') || contains(github.event.head_commit.removed, 'pean-stack/backend/')
+      if: steps.changed-files.outputs.backend == 'true'
       run: |
         docker build -t podnes/backend-op ./pean-stack/backend
         docker push podnes/backend-op:latest
 
     - name: Build and Push Frontend Docker Image
-      if: contains(github.event.head_commit.modified, 'pean-stack/frontend/') || contains(github.event.head_commit.added, 'pean-stack/frontend/') || contains(github.event.head_commit.removed, 'pean-stack/frontend/')
+      if: steps.changed-files.outputs.frontend == 'true'
       run: |
         docker build -t podnes/frontend-op ./pean-stack/frontend
         docker push podnes/frontend-op:latest

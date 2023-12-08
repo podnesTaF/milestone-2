@@ -69,6 +69,7 @@ app.get("/update-name", async (req, res) => {
     // Get name from query string or default to 'Alex Pidnebesnyi'
     const newName = req.query.name || "Alex Pidnebesnyi";
 
+    // Update the user's name in the database
     await pool.query("UPDATE users SET fullName = $1 WHERE id = 1", [newName]);
 
     res.json({ message: "Name updated successfully", newName });
