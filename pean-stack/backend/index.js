@@ -63,7 +63,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Define a GET route to update name based on query parameter
+// Define a GET route to update the user's name
 app.get("/update-name", async (req, res) => {
   try {
     // Get name from query string or default to 'Alex Pidnebesnyi'
