@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check Out Repo
+      uses: actions/checkout@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Build and Push Backend Docker Image
+      if: contains(github.event.head_commit.message, 'backend')
+      run: |
+        docker build -t podnes/backend-op ./pean-stack/backend
+        docker push podnes/backend-op:latest
+
+    - name: Build and Push Frontend Docker Image
+      if: contains(github.event.head_commit.message, 'frontend')
+      run: |
+        docker build -t podnes/frontend-op ./pean-stack/frontend
+        docker push podnes/frontend-op:latest
