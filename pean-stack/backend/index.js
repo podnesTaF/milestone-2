@@ -6,11 +6,12 @@ const { Pool } = require("pg"); // PostgreSQL client pool from the pg module
 
 // Initialize express application
 const app = express();
+
 app.use(cors()); // Apply CORS middleware
 
 // Configuration for server and PostgreSQL
 const PORT = 4000; // Server port
-const hostname = "0.0.0.0"; // Hostname (0.0.0.0 listens on all interfaces)
+const hostname = "0.0.0.0";
 const MAX_RETRIES = 10; // Maximum number of retries to connect to the database
 const RETRY_DELAY = 5000; // Delay in milliseconds between retries
 
@@ -69,7 +70,6 @@ app.get("/update-name", async (req, res) => {
     // Get name from query string or default to 'Alex Pidnebesnyi'
     const newName = req.query.name || "Alex Pidnebesnyi";
 
-    // Update the user's name in the database
     await pool.query("UPDATE users SET fullName = $1 WHERE id = 1", [newName]);
 
     res.json({ message: "Name updated successfully", newName });
