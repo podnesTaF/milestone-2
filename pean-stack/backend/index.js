@@ -63,6 +63,23 @@ app.get("/", async (req, res) => {
   }
 });
 
+// Define a GET route to update name based on query parameter
+app.get("/update-name", async (req, res) => {
+  try {
+    // Get name from query string or default to 'Alex Pidnebesnyi'
+    const newName = req.query.name || "Alex Pidnebesnyi";
+
+    // Update the first user's full name in the database
+    await pool.query("UPDATE users SET fullName = $1 WHERE id = 1", [newName]);
+
+    // Respond with a success message
+    res.json({ message: "Name updated successfully", newName });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // Function to start the server
 const startServer = async () => {
   try {
