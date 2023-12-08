@@ -15,7 +15,7 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-     - name: Determine Changed Paths
+    - name: Determine Changed Paths
       id: changed-files
       uses: dorny/paths-filter@v2
       with:
