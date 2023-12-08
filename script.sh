@@ -7,18 +7,16 @@ sudo apt install docker.io -y
 
 sudo usermod -aG docker vagrant
 
-sudo apt install docker-compose -y
-
-# Optionally: Install Kompose for Docker Compose to Kubernetes conversion
-curl -L https://github.com/kubernetes/kompose/releases/download/v1.26.0/kompose-linux-amd64 -o kompose
-sudo chmod +x kompose
-sudo mv kompose /usr/local/bin/
+# Install Kubernetes
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
 
 # Install minikube
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 chmod +x minikube
 sudo mv minikube /usr/local/bin/
-
 
 # Install Helm
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
@@ -35,9 +33,6 @@ helm install grafana grafana/grafana
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
 helm install argocd argo/argo-cd
-
-# add namespace
-kubectl create namespace milestone-2-op
 
 # Check installations
 kubectl version --client

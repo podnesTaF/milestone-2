@@ -10,15 +10,15 @@ image:
 
 backend:
   name: backend-op
-  replicaCount: 3
+  replicaCount: 1
   image:
     repository: podnes/backend-op
     pullPolicy: Always
     tag: "latest"
   service:
     type: ClusterIP
-    port: 3000
-    targetPort: 3000
+    port: 4000
+    targetPort: 4000
 frontend:
   name: frontend-op
   replicaCount: 1
@@ -42,7 +42,7 @@ database:
     port: 5432
     targetPort: 5432
   storage:
-    size: 1Gi
+    size: 500Mi
     storageClass: standard
 
 imagePullSecrets: []

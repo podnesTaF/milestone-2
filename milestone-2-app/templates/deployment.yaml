@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "milestone-2-app.fullname" . }}
+  namespace: default
   labels:
     {{- include "milestone-2-app.labels" . | nindent 4 }}
 spec:

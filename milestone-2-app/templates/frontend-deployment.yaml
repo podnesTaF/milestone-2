@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.frontend.name }}
+  namespace: default
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
   selector:
@@ -15,5 +16,6 @@ spec:
       containers:
         - name: frontend-op
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.frontend.service.port }}

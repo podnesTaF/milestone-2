@@ -1,19 +1,24 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1  # Specifies the API version for deployment
+kind: Deployment     # Defines this as a deployment
 metadata:
-  name: {{ .Values.backend.name }}
+  name: {{ .Values.backend.name }}  # Sets the deployment name from values.yaml
+  namespace: default
 spec:
-  replicas: {{ .Values.backend.replicaCount }}
+  replicas: {{ .Values.backend.replicaCount }}  # Number of replicas for the deployment
   selector:
     matchLabels:
-      app: {{ .Values.backend.name }}
+      app: {{ .Values.backend.name }}  # Selector to match labels for deployment
+
   template:
     metadata:
       labels:
-        app: {{ .Values.backend.name }}
+        app: {{ .Values.backend.name }}  # Labels for pod templates
+
     spec:
       containers:
-        - name: backend-op
-          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+        - name: {{ .Values.backend.name }}  # Container name
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"  # Image to use for container
+          imagePullPolicy: {{ .Values.backend.image.pullPolicy }}  # Image pull policy
           ports:
-            - containerPort: {{ .Values.backend.service.port }}
+            - containerPort: {{ .Values.backend.service.port }}  # Container port to expose
+
