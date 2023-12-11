@@ -11,7 +11,7 @@ jobs:
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
-      with:
+      with: # the secret I created inside my working repository. I generated the access  token in the docker hub.
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
@@ -26,13 +26,13 @@ jobs:
             - 'pean-stack/frontend/**'
 
     - name: Build and Push Backend Docker Image
-      if: steps.changed-files.outputs.backend == 'true'
+      if: steps.changed-files.outputs.backend == 'true' # if some files were changed within "backend directory"
       run: |
         docker build -t podnes/backend-op ./pean-stack/backend
         docker push podnes/backend-op:latest
 
     - name: Build and Push Frontend Docker Image
-      if: steps.changed-files.outputs.frontend == 'true'
+      if: steps.changed-files.outputs.frontend == 'true' # if some files were changed within "frontend directory"
       run: |
         docker build -t podnes/frontend-op ./pean-stack/frontend
         docker push podnes/frontend-op:latest

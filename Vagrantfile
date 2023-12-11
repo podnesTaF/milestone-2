@@ -29,8 +29,9 @@ Vagrant.configure("2") do |config|
 
    # Configure VM provider settings
    config.vm.provider "virtualbox" do |vb|
-    vb.memory = "4096"  # Set this to the desired memory (in MB)
-    vb.cpus = 2  # Set this to the desired number of CPUs
+    vb.memory = "8096"  # Set this to the desired memory (in MB)
+    vb.cpus = 3  # Set this to the desired number of CPUs
+
   end
 
   config.vm.provision "shell", path: "script.sh"

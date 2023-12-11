@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Forward ports for backend services
-kubectl port-forward pod/frontend-op-7758bc6b48-nnfzw  --address 192.168.56.5 30080:80 &
+kubectl port-forward pod/frontend-op-7758bc6b48-8v4lq  --address 192.168.56.5 30080:80 &
 kubectl port-forward svc/backend-op --address 192.168.56.5 4000:4000 &
 
 kubectl port-forward service/argocd-server --address 192.168.56.5 8080:443 &
